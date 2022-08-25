@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Getter
@@ -20,6 +21,10 @@ public class User {
     private String password;
 
     private String role;
+
+    @Email(message = "Please input your email for your username")
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "first_name")
     private String firstName;
