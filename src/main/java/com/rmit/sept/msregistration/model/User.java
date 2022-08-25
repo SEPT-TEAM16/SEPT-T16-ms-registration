@@ -1,4 +1,4 @@
-package com.rmit.sept.msregistration.user;
+package com.rmit.sept.msregistration.model;
 
 import lombok.Getter;
 import lombok.Setter;
