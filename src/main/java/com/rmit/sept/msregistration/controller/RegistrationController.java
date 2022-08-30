@@ -19,11 +19,11 @@ public class RegistrationController {
 
     @PostMapping(path="/register") // Map ONLY POST Requests
     public ResponseEntity<User> registerNewUser(@RequestBody User userDetails) {
-        return new ResponseEntity<>(registrationService.saveNewUserDetails(userDetails),HttpStatus.OK);
+        return new ResponseEntity<>(registrationService.saveNewUserDetails(userDetails), HttpStatus.OK);
     }
 
     @GetMapping(path="/get-user/{userId}")
-    public Optional<User> getExistingUserDetails(@PathVariable String userId) {
+    public Optional<User> getExistingUserDetails(@PathVariable Integer userId) {
         return registrationService.getExistingUserDetails(userId);
     }
 }

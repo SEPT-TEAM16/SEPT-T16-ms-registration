@@ -1,6 +1,8 @@
 package com.rmit.sept.msregistration.model;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,7 +14,7 @@ public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "user_id")
-    private String userId;
+    private Integer userId;
 
     @Column(name = "email")
     private String email;
