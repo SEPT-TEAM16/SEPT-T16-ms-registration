@@ -1,6 +1,7 @@
 package com.rmit.sept.msregistration.model;
 
 import lombok.Data;
+import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,30 +17,31 @@ public class User {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "email")
+
+    @Column(name="email", nullable=false, unique=true)
     private String email;
 
-    @Column(name = "first_name")
+    @Column(name="first_name", nullable=false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name="last_name", nullable=false)
     private String lastName;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable=false)
     private String password;
 
-    @Column(name = "dob")
+    @Column(name="dob", nullable=false)
     private Date DoB;
 
-    @Column(name = "account_active")
+    @Column(name="account_active", nullable=false)
     private boolean accountActive;
 
-    @Column(name = "address")
+    @Column(name="address")
     private String address;
 
-    @Column(name = "mobile_number")
+    @Column(name="mobile_number", unique=true)
     private String mobileNumber;
 
-    @Column(name = "role")
+    @Column(name="role", nullable=false)
     private String role;
 }
