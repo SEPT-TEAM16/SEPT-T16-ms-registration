@@ -37,7 +37,7 @@ public class User {
     private String password;
 
     @Column(name="dob", nullable=false)
-    @JsonFormat(pattern="dd-MM-yyyy")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date DoB;
 
     @Column(name="account_active", nullable=false)
