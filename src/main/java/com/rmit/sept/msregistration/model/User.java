@@ -1,9 +1,13 @@
 package com.rmit.sept.msregistration.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rmit.sept.msregistration.constants.AppRole;
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +37,7 @@ public class User {
     private String password;
 
     @Column(name="dob", nullable=false)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date DoB;
 
     @Column(name="account_active", nullable=false)
@@ -45,5 +50,7 @@ public class User {
     private String mobileNumber;
 
     @Column(name="role", nullable=false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private AppRole role;
+
 }
