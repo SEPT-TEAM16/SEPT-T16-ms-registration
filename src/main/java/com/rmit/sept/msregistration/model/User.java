@@ -1,5 +1,6 @@
 package com.rmit.sept.msregistration.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -33,6 +34,7 @@ public class User {
     private String password;
 
     @Column(name="dob", nullable=false)
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date DoB;
 
     @Column(name="account_active", nullable=false)
