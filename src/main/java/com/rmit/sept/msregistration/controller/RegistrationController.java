@@ -5,6 +5,7 @@ import com.rmit.sept.msregistration.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/api/v1") // This means URL's start with /register (after Application path)
+@Validated
 public class RegistrationController {
 
     @Autowired
