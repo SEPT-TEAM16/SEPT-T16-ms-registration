@@ -1,5 +1,6 @@
 package com.rmit.sept.msregistration.service;
 
+import com.rmit.sept.msregistration.exception.UserIdException;
 import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.repository.UserRepository;
 import org.slf4j.Logger;
@@ -25,6 +26,12 @@ public class RegistrationService {
 
     public Optional<User> getExistingUserDetails(Integer userId) {
         log.info("Fetching details for user with userId={}", userId);
-        return userRepository.findById(userId);
+        Optional<User> userDetails = userRepository.findById(userId);
+
+        log.error("Fetching details for user with userDetails{}", userDetails.toString());
+        if(userDetails.isEmpty()){
+            throw new UserIdException("user Id is not found in the database", userId);
+        }
+        return userDetails;
     }
 }
