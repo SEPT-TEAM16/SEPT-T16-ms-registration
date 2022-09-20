@@ -36,11 +36,11 @@ public class ServiceTest {
                 .userId(48)
                 .build();
 
-        when(repository.findById(String.valueOf(48))).thenReturn(Optional.of(userDetails));
+        when(repository.findById(48)).thenReturn(Optional.of(userDetails));
 
         Optional<User> result = service.getExistingUserDetails(48);
 
         assertThat(result.get().getUserId(), is(48));
-        verify(repository).findById(String.valueOf(48));
+        verify(repository).findById(48);
     }
 }
