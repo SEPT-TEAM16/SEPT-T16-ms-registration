@@ -30,15 +30,17 @@ public class ServiceTest {
     @Test
     public void getUserId_validRequest_returnSuccess() {
 
+        // given I have used lombok builder to build the user entity class
+        // and passed through the user id
         User userDetails = User.builder()
-                .userId(1)
+                .userId(48)
                 .build();
 
-        when(repository.findById(1)).thenReturn(Optional.of(userDetails));
+        when(repository.findById(String.valueOf(48))).thenReturn(Optional.of(userDetails));
 
-        Optional<User> result = service.getExistingUserDetails(1);
+        Optional<User> result = service.getExistingUserDetails(48);
 
-        assertThat(result.get().getUserId(), is(1));
-        verify(repository).findById(1);
+        assertThat(result.get().getUserId(), is(48));
+        verify(repository).findById(String.valueOf(48));
     }
 }
