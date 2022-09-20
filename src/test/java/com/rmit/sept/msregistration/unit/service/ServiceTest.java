@@ -36,11 +36,17 @@ public class ServiceTest {
                 .userId(48)
                 .build();
 
+        // when I call the repository with the method: 'findById'
+        // it should return the created user entity class
         when(repository.findById(48)).thenReturn(Optional.of(userDetails));
 
+        // then service method is stored in the user result
         Optional<User> result = service.getExistingUserDetails(48);
 
+        // it is asserting that the passed through user id in result
+        // is actually the id 48
         assertThat(result.get().getUserId(), is(48));
+        // it is verifying the method in the repo has been called
         verify(repository).findById(48);
     }
 }
