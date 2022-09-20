@@ -1,5 +1,4 @@
 package com.rmit.sept.msregistration.model;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rmit.sept.msregistration.constants.AppRole;
 import lombok.AllArgsConstructor;
@@ -15,15 +14,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Table(name = "users")
 public class User {
 
@@ -32,40 +29,33 @@ public class User {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name="email")
-    @NotBlank (message = "email is required")
+    @Column(name="email", nullable=false, unique=true)
     private String email;
 
-    @NotBlank (message = "first name is required")
-    @Pattern(regexp = "[a-zA-Z ]", message = "first name should only contain letters")
-    @Column(name="first_name")
+    @Column(name="first_name", nullable=false)
     private String firstName;
 
-    @NotBlank (message = "first name is required")
-    @Pattern(regexp = "[a-zA-Z ]", message = "last name should only contain letters")
-    @Column(name="last_name")
+
+    @Column(name="last_name", nullable=false)
     private String lastName;
 
-    @NotBlank (message = "password is required")
-    @Column(name = "password")
+    @Column(name = "password", nullable=false)
     private String password;
 
-    @NotBlank (message = "date of birth is required")
-    @Column(name="dob")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @Column(name="dob", nullable=false)
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date DoB;
 
-    @Column(name="account_active")
+    @Column(name="account_active", nullable=false)
     private boolean accountActive;
 
     @Column(name="address")
     private String address;
 
-    @NotBlank (message = "mobile number is required")
     @Column(name="mobile_number", unique=true)
     private String mobileNumber;
 
-    @Column(name="role")
+    @Column(name="role", nullable=false)
     @Enumerated(EnumType.STRING)
     private AppRole role;
 
