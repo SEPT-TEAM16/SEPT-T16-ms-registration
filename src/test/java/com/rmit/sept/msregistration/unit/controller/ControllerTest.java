@@ -37,14 +37,17 @@ public class ControllerTest {
     @Test
     public void postResponseBody_validRequest_returnSuccess() throws Exception {
 
+        // given I have used lombok builder to build the user entity class
+        // and passed through a few attributes
         User userDetails = User.builder()
                 .email("johnford23@gmail.com")
                 .firstName("John")
                 .lastName("Ford")
                 .build();
-
+        // when calling the service layer
+        // I pass through the created user model
         controller.registerNewUser(userDetails);
-
+        // then I verify the service was called once by passing through any argument
         verify(service, times(1)).saveNewUserDetails(any());
     }
 }
