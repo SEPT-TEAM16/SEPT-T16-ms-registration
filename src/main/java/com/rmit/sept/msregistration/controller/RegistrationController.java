@@ -1,5 +1,6 @@
 package com.rmit.sept.msregistration.controller;
 
+import com.rmit.sept.msregistration.model.MedicalRecord;
 import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,26 @@ public class RegistrationController {
 
     @PostMapping(path="/register") // Map ONLY POST Requests
     public ResponseEntity<User> registerNewUser(@RequestBody User userDetails) {
-        return new ResponseEntity<>(registrationService.saveNewUserDetails(userDetails), HttpStatus.OK);
+        return new ResponseEntity<>(registrationService.saveNewUserDetails(userDetails), HttpStatus.CREATED);
     }
 
     @GetMapping(path="/get-user/{userId}")
     public Optional<User> getExistingUserDetails(@PathVariable Integer userId) {
         return registrationService.getExistingUserDetails(userId);
+    }
+
+    @PutMapping(path="/update-user/{userId}")
+    public ResponseEntity<User> updateExistingUserDetails(@RequestBody User newUserDetails, @PathVariable Integer userId) {
+        return new ResponseEntity<>(registrationService.updateExistingUserDetails(newUserDetails, userId), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path="/delete-user/{userId}")
+    public void deleteExistingUserDetails(@PathVariable Integer userId) {
+        registrationService.deleteExistingUserDetails(userId);
+    }
+
+    @PostMapping(path="/medical-record/{userId}") // Map ONLY POST Requests
+    public ResponseEntity<MedicalRecord> addMedicalInfo(@RequestBody MedicalRecord medicalInfo, @PathVariable Integer userId) {
+        return new ResponseEntity<>(registrationService.saveNewMedicalInfo(medicalInfo, userId), HttpStatus.CREATED);
     }
 }
