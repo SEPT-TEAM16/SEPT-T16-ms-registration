@@ -2,7 +2,7 @@ package com.rmit.sept.msregistration.unit.service;
 
 import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.repository.UserRepository;
-import com.rmit.sept.msregistration.service.RegistrationService;
+import com.rmit.sept.msregistration.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.*;
 public class ServiceTest {
     
     @InjectMocks
-    private RegistrationService service;
+    private UserService service;
     
     @Mock
     private UserRepository repository;
