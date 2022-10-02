@@ -2,6 +2,8 @@ package com.rmit.sept.msregistration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class MsRegistrationApplication {
@@ -10,4 +12,8 @@ public class MsRegistrationApplication {
         SpringApplication.run(MsRegistrationApplication.class, args);
     }
 
+    @Bean
+    public BCryptPasswordEncoder encoder(){
+        return new BCryptPasswordEncoder();
+    }
 }
