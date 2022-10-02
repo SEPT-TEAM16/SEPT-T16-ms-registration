@@ -1,8 +1,8 @@
 package com.rmit.sept.msregistration.unit.controller;
 
-import com.rmit.sept.msregistration.controller.RegistrationController;
+import com.rmit.sept.msregistration.controller.UserController;
 import com.rmit.sept.msregistration.model.User;
-import com.rmit.sept.msregistration.service.RegistrationService;
+import com.rmit.sept.msregistration.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,10 +20,10 @@ import static org.mockito.Mockito.*;
 public class ControllerTest {
 
     @InjectMocks
-    private RegistrationController controller;
+    private UserController controller;
 
     @Mock
-    private RegistrationService service;
+    private UserService service;
 
     private HttpHeaders httpHeaders;
 
