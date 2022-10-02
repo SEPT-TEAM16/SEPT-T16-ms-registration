@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 public class JwtTokenGenerator implements Serializable {
 
     @Value("${jwt.token.validity}")
-    public long tokenValidity;
+    private long tokenValidity;
 
     @Value("${jwt.signing.key}")
-    public String signingKey;
+    private String signingKey;
 
     @Value("${jwt.authorities.key}")
-    public String authoritiesKey;
+    private String authoritiesKey;
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
