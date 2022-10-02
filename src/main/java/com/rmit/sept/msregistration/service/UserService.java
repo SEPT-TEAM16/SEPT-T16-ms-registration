@@ -1,22 +1,26 @@
 package com.rmit.sept.msregistration.service;
 
-import com.rmit.sept.msregistration.constants.AppRole;
 import com.rmit.sept.msregistration.exception.UserIdException;
 import com.rmit.sept.msregistration.model.MedicalRecord;
 import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.repository.MedicalRepository;
 import com.rmit.sept.msregistration.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class RegistrationService {
-
-    Logger log = LoggerFactory.getLogger(this.getClass().getName());
+@Slf4j
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -24,8 +28,32 @@ public class RegistrationService {
     @Autowired
     private MedicalRepository medicalRepository;
 
-    public User saveNewUserDetails(User userInfo) {
+    @Autowired
+    private BCryptPasswordEncoder bcryptEncoder;
 
+    @Value("${jwt.role.prefix}")
+    private String rolePrefix;
+
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if(user == null){
+            throw new UsernameNotFoundException("Invalid request, please check your username or password");
+        }
+        log.info("Capture the username: {} and authority: {}", user.getEmail(), getAuthorities(user));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities(User user) {
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+
+        list.add(new SimpleGrantedAuthority(rolePrefix + user.getRole()));
+        log.info("Capture the user role: {} been passed through user service", user.getRole());
+        return list;
+    }
+
+
+    public User saveNewUserDetails(User userInfo) {
+        userInfo.setPassword(bcryptEncoder.encode(userInfo.getPassword()));
         log.info("Saving new user with userInfo={}", userInfo.toString());
         return userRepository.save(userInfo);
 
