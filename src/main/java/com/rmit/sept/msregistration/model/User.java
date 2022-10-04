@@ -28,6 +28,7 @@ public class User {
     @Column(name = "user_id")
     private Integer userId;
 
+
     @Column(name="email", nullable=false, unique=true)
     private String email;
 
@@ -51,7 +52,7 @@ public class User {
     @Column(name="address")
     private String address;
 
-    @Column(name="mobile_number", unique=true)
+    @Column(name="mobile_number")
     private String mobileNumber;
 
     @Column(name="role", nullable=false)

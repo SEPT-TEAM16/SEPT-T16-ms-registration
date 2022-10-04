@@ -1,5 +1,6 @@
 package com.rmit.sept.msregistration.controller;
 
+import com.rmit.sept.msregistration.model.Doctor;
 import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class RegistrationController {
     @PostMapping(path="/register") // Map ONLY POST Requests
     public ResponseEntity<User> registerNewUser(@RequestBody User userDetails) {
         return new ResponseEntity<>(registrationService.saveNewUserDetails(userDetails), HttpStatus.OK);
+        //return new ResponseEntity<>(registrationService.saveNewDoctorDetails(userDetails), HttpStatus.OK);
     }
 
     @GetMapping(path="/get-user/{userId}")
