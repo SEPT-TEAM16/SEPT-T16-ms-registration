@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(path="/api/v1") // This means URL's start with /register (after Application path)
 @Validated
