@@ -1,3 +1,5 @@
+DROP VIEW `users`;
+
 CREATE VIEW `users` AS
 SELECT *
 FROM doctors
