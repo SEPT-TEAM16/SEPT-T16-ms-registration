@@ -5,26 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.Subselect;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Data
 @Entity
-@Immutable
-@Subselect("SELECT * FROM users")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@Table(name = "admins")
+public class Admin {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "user_id")
     private Integer userId;
 
@@ -56,6 +57,6 @@ public class User {
 
     @Column(name="role", nullable=false)
     @Enumerated(EnumType.STRING)
-    private AppRole role;
+    private AppRole role = AppRole.ADMIN;
 
 }
