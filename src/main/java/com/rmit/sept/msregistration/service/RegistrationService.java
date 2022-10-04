@@ -29,7 +29,7 @@ public class RegistrationService {
         Optional<User> userDetails = userRepository.findById(userId);
 
         log.error("Fetching details for user with userDetails{}", userDetails.toString());
-        if(userDetails.isEmpty()){
+        if(!userDetails.isPresent()){
             throw new UserIdException("user Id is not found in the database", userId);
         }
         return userDetails;
