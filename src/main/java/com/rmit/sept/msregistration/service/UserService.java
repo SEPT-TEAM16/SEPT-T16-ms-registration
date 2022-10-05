@@ -59,14 +59,15 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public Optional<User> getExistingUserDetails(Integer userId) {
-        log.info("Fetching details for user with userId={}", userId);
-        Optional<User> userDetails = userRepository.findById(userId);
-
+    public User getExistingUserDetails(String email) throws Exception {
+        log.info("Fetching details for user with email={}", email);
+        User userDetails = userRepository.findByEmail(email);
         log.error("Fetching details for user with userDetails{}", userDetails.toString());
-        if(userDetails.isEmpty()){
-            throw new UserIdException("user Id is not found in the database", userId);
-        }
+//        if(userDetails.getEmail() != email){
+//            log.info("user email:{}", userDetails.getEmail());
+//            log.info("passed through email:{}", email);
+//            throw new Exception("email is not found in the database");
+//        }
         return userDetails;
     }
 
