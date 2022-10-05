@@ -28,25 +28,25 @@ public class ServiceTest {
     private UserRepository repository;
     
     @Test
-    public void getUserId_validRequest_returnSuccess() {
+    public void getUserEmail_validRequest_returnSuccess() throws Exception {
 
         // given I have used lombok builder to build the user entity class
         // and passed through the user id
         User userDetails = User.builder()
-                .userId(48)
+                .email("dangao233@gmail.com")
                 .build();
 
         // when I call the repository with the method: 'findById'
         // it should return the created user entity class
-        when(repository.findById(48)).thenReturn(Optional.of(userDetails));
+        when(repository.findByEmail("dangao233@gmail.com")).thenReturn(userDetails);
 
         // then service method is stored in the user result
-        Optional<User> result = service.getExistingUserDetails(48);
+       User result = service.getExistingUserDetails("dangao233@gmail.com");
 
         // it is asserting that the passed through user id in result
         // is actually the id 48
-        assertThat(result.get().getUserId(), is(48));
+        assertThat(result.getEmail(), is("dangao233@gmail.com"));
         // it is verifying the method in the repo has been called
-        verify(repository).findById(48);
+        verify(repository).findByEmail("dangao233@gmail.com");
     }
 }
