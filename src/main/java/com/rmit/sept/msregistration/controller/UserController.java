@@ -54,9 +54,10 @@ public class UserController {
         return new ResponseEntity<>(userService.saveNewUserDetails(userDetails), HttpStatus.CREATED);
     }
 
-    @GetMapping(path="/get-user/{userId}")
-    public Optional<User> getExistingUserDetails(@PathVariable Integer userId) {
-        return userService.getExistingUserDetails(userId);
+    @PreAuthorize("hasRole('PATIENT')")
+    @GetMapping(path="/get-user/{email}")
+    public User getExistingUserDetails(@PathVariable String email) throws Exception {
+        return userService.getExistingUserDetails(email);
     }
 
     @PutMapping(path="/update-user/{userId}")
