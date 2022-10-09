@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -36,7 +37,7 @@ public class UserController {
     private JwtTokenGenerator jwtTokenUtil;
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<?> generateToken(@RequestBody UserLogin userLoginRequest) throws AuthenticationException {
+    public ResponseEntity<?> generateToken(@RequestBody UserLogin userLoginRequest) throws AuthenticationException, UnsupportedEncodingException {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
