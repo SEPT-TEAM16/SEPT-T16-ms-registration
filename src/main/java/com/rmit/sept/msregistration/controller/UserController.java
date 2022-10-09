@@ -61,30 +61,21 @@ public class UserController {
         return userService.getExistingUserDetails(email);
     }
 
+    @PreAuthorize("hasRole('PATIENT')")
     @PutMapping(path="/update-user/{userId}")
     public ResponseEntity<User> updateExistingUserDetails(@RequestBody User newUserDetails, @PathVariable Integer userId) {
         return new ResponseEntity<>(userService.updateExistingUserDetails(newUserDetails, userId), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('DOCTOR')")
     @DeleteMapping(path="/delete-user/{userId}")
     public void deleteExistingUserDetails(@PathVariable Integer userId) {
         userService.deleteExistingUserDetails(userId);
     }
 
+    @PreAuthorize("hasRole('PATIENT')")
     @PostMapping(path="/medical-record/{userId}") // Map ONLY POST Requests
     public ResponseEntity<MedicalRecord> addMedicalInfo(@RequestBody MedicalRecord medicalInfo, @PathVariable Integer userId) {
         return new ResponseEntity<>(userService.saveNewMedicalInfo(medicalInfo, userId), HttpStatus.CREATED);
-    }
-
-    @PreAuthorize("hasRole('PATIENT')")
-    @GetMapping(value="/patient")
-    public String patientEndpoint(){
-        return "Only patients can access this endpoint";
-    }
-
-    @PreAuthorize("hasRole('DOCTOR')")
-    @GetMapping(value="/doctor")
-    public String doctorEndpoint(){
-        return "Only doctors can access this endpoint";
     }
 }
