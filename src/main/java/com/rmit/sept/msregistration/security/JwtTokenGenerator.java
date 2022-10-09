@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -22,8 +23,8 @@ public class JwtTokenGenerator implements Serializable {
     @Value("${jwt.token.validity}")
     private long tokenValidity;
 
-    @Value("${jwt.signing.key}")
-    private String signingKey;
+    @Value("${jwt.secret.key}")
+    private String secretKey;
 
     @Value("${jwt.authorities.key}")
     private String authoritiesKey;
@@ -43,7 +44,7 @@ public class JwtTokenGenerator implements Serializable {
 
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
-                .setSigningKey(signingKey)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -53,7 +54,7 @@ public class JwtTokenGenerator implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) throws UnsupportedEncodingException {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -63,7 +64,7 @@ public class JwtTokenGenerator implements Serializable {
                 .claim(authoritiesKey, authorities)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + tokenValidity*1000))
-                .signWith(SignatureAlgorithm.HS256, signingKey)
+                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
                 .compact();
     }
 
@@ -74,7 +75,7 @@ public class JwtTokenGenerator implements Serializable {
 
     UsernamePasswordAuthenticationToken getAuthenticationToken(final String token, final Authentication existingAuth, final UserDetails userDetails) {
 
-        final JwtParser jwtParser = Jwts.parser().setSigningKey(signingKey);
+        final JwtParser jwtParser = Jwts.parser().setSigningKey(secretKey);
 
         final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
 
