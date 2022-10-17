@@ -1,7 +1,6 @@
 package com.rmit.sept.msregistration.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rmit.sept.msregistration.constants.AppRole;
-import jdk.nashorn.internal.runtime.regexp.joni.ApplyCaseFoldArg;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
