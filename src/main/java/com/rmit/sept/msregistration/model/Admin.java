@@ -1,10 +1,12 @@
 package com.rmit.sept.msregistration.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rmit.sept.msregistration.constants.AppRole;
+import jdk.nashorn.internal.runtime.regexp.joni.ApplyCaseFoldArg;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,8 +26,22 @@ import java.util.Date;
 @Table(name = "admins")
 public class Admin {
 
+    public Admin(User user){
+        this.userId = user.getUserId();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.password = user.getPassword();
+        this.DoB = user.getDoB();
+        this.accountActive = user.isAccountActive();
+        this.address = user.getAddress();
+        this.mobileNumber = user.getMobileNumber();
+        this.role = AppRole.ADMIN;
+    }
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GenericGenerator(name = "new_id", strategy = "increment")
+    @GeneratedValue(generator = "new_id")
     @Column(name = "user_id")
     private Integer userId;
 

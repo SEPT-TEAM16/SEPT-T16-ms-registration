@@ -24,6 +24,45 @@ import java.util.Date;
 @NoArgsConstructor
 public class User {
 
+    public User(Doctor user){
+        this.userId = user.getUserId();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.password = user.getPassword();
+        this.DoB = user.getDoB();
+        this.accountActive = user.isAccountActive();
+        this.address = user.getAddress();
+        this.mobileNumber = user.getMobileNumber();
+        this.role = AppRole.DOCTOR;
+    }
+
+    public User(Admin user){
+        this.userId = user.getUserId();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.password = user.getPassword();
+        this.DoB = user.getDoB();
+        this.accountActive = user.isAccountActive();
+        this.address = user.getAddress();
+        this.mobileNumber = user.getMobileNumber();
+        this.role = AppRole.ADMIN;
+    }
+
+    public User(Patient user){
+        this.userId = user.getUserId();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.password = user.getPassword();
+        this.DoB = user.getDoB();
+        this.accountActive = user.isAccountActive();
+        this.address = user.getAddress();
+        this.mobileNumber = user.getMobileNumber();
+        this.role = AppRole.PATIENT;
+    }
+
     @Id
     @Column(name = "user_id")
     private Integer userId;
