@@ -1,6 +1,8 @@
 package com.rmit.sept.msregistration.unit.service;
 
+import com.rmit.sept.msregistration.model.Doctor;
 import com.rmit.sept.msregistration.model.User;
+import com.rmit.sept.msregistration.repository.DoctorRepository;
 import com.rmit.sept.msregistration.repository.UserRepository;
 import com.rmit.sept.msregistration.service.RegistrationService;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import javax.print.Doc;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -25,20 +28,20 @@ public class ServiceTest {
     private RegistrationService service;
     
     @Mock
-    private UserRepository repository;
+    private DoctorRepository repository;
     
     @Test
-    public void getUserId_validRequest_returnSuccess() {
+    public void getDoctorUserId_validRequest_returnSuccess() {
 
         // given I have used lombok builder to build the user entity class
         // and passed through the user id
-        User userDetails = User.builder()
+        Doctor userDetails = Doctor.builder()
                 .userId(48)
                 .build();
 
         when(repository.findById(48)).thenReturn(Optional.of(userDetails));
 
-        Optional<User> result = service.getExistingUserDetails(48);
+        Optional<Doctor> result = service.getExistingDoctorDetails(48);
 
         assertThat(result.get().getUserId(), is(48));
         verify(repository).findById(48);
