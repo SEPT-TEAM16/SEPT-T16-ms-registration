@@ -18,6 +18,7 @@ import java.util.Date;
 @Data
 @Entity
 @Immutable
+@Subselect("SELECT * FROM users")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
