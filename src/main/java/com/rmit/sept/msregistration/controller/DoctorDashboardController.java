@@ -2,6 +2,7 @@ package com.rmit.sept.msregistration.controller;
 
 import com.rmit.sept.msregistration.model.Admin;
 import com.rmit.sept.msregistration.model.Doctor;
+import com.rmit.sept.msregistration.model.Patient;
 import com.rmit.sept.msregistration.service.DoctorService;
 import com.rmit.sept.msregistration.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,15 @@ public class DoctorDashboardController {
     @DeleteMapping(path="/delete-user/{patientId}")
     public void deleteExistingUserDetails(@PathVariable Integer patientId) {
         patientService.deleteExistingUserDetails(patientId);
+    }
+
+    @GetMapping(path="/get-patient/{email}")
+    public Integer getExistingPatientDetailsByEmail(@PathVariable String email) {
+        return patientService.getExistingPatientDetailsByEmail(email);
+    }
+
+    @GetMapping(path="/get-patient/{userId}")
+    public Optional<Patient> getExistingPatientDetails(@PathVariable Integer userId) {
+        return patientService.getExistingPatientDetails(userId);
     }
 }

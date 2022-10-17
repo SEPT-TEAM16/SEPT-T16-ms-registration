@@ -30,14 +30,4 @@ public class PatientDashboardController {
     public ResponseEntity<MedicalRecord> addMedicalInfo(@RequestBody MedicalRecord medicalInfo, @PathVariable Integer patientId) {
         return new ResponseEntity<>(patientService.saveNewMedicalInfo(medicalInfo, patientId), HttpStatus.CREATED);
     }
-
-    @GetMapping(path="/get-patient/{userId}")
-    public Optional<Patient> getExistingPatientDetails(@PathVariable Integer userId) {
-        return patientService.getExistingPatientDetails(userId);
-    }
-
-    @GetMapping(path="/get-patient/{email}")
-    public Integer getExistingDoctorDetailsByEmail(@PathVariable String email) {
-        return patientService.getExistingPatientDetailsByEmail(email);
-    }
 }
