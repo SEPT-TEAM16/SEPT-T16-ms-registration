@@ -5,52 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.Subselect;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Data
 @Entity
-@Immutable
-@Subselect("SELECT * FROM users")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@Table(name = "patients")
+public class Patient {
 
-    public User(Doctor user){
-        this.userId = user.getUserId();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.password = user.getPassword();
-        this.DoB = user.getDoB();
-        this.accountActive = user.isAccountActive();
-        this.address = user.getAddress();
-        this.mobileNumber = user.getMobileNumber();
-        this.role = AppRole.DOCTOR;
-    }
-
-    public User(Admin user){
-        this.userId = user.getUserId();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.password = user.getPassword();
-        this.DoB = user.getDoB();
-        this.accountActive = user.isAccountActive();
-        this.address = user.getAddress();
-        this.mobileNumber = user.getMobileNumber();
-        this.role = AppRole.ADMIN;
-    }
-
-    public User(Patient user){
+    public Patient(User user){
         this.userId = user.getUserId();
         this.email = user.getEmail();
         this.firstName = user.getFirstName();
@@ -64,9 +39,10 @@ public class User {
     }
 
     @Id
+    @GenericGenerator(name = "new_id", strategy = "increment")
+    @GeneratedValue(generator = "new_id")
     @Column(name = "user_id")
     private Integer userId;
-
 
     @Column(name="email", nullable=false, unique=true)
     private String email;
@@ -96,6 +72,6 @@ public class User {
 
     @Column(name="role", nullable=false)
     @Enumerated(EnumType.STRING)
-    private AppRole role;
+    private AppRole role = AppRole.PATIENT;
 
 }

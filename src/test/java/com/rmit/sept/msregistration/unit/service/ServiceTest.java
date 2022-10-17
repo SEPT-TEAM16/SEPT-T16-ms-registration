@@ -1,8 +1,10 @@
 package com.rmit.sept.msregistration.unit.service;
 
+import com.rmit.sept.msregistration.model.Doctor;
 import com.rmit.sept.msregistration.model.User;
+import com.rmit.sept.msregistration.repository.DoctorRepository;
 import com.rmit.sept.msregistration.repository.UserRepository;
-import com.rmit.sept.msregistration.service.UserService;
+import com.rmit.sept.msregistration.service.RegistrationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,6 +12,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+
+import javax.print.Doc;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -20,31 +25,25 @@ import static org.hamcrest.Matchers.*;
 public class ServiceTest {
     
     @InjectMocks
-    private UserService service;
+    private RegistrationService service;
     
     @Mock
-    private UserRepository repository;
+    private DoctorRepository repository;
     
     @Test
-    public void getUserEmail_validRequest_returnSuccess() throws Exception {
+    public void getDoctorUserId_validRequest_returnSuccess() {
 
         // given I have used lombok builder to build the user entity class
         // and passed through the user id
-        User userDetails = User.builder()
-                .email("dangao233@gmail.com")
+        Doctor userDetails = Doctor.builder()
+                .userId(48)
                 .build();
 
-        // when I call the repository with the method: 'findById'
-        // it should return the created user entity class
-        when(repository.findByEmail("dangao233@gmail.com")).thenReturn(userDetails);
+        when(repository.findById(48)).thenReturn(Optional.of(userDetails));
 
-        // then service method is stored in the user result
-       User result = service.getExistingUserDetails("dangao233@gmail.com");
+        Optional<Doctor> result = service.getExistingDoctorDetails(48);
 
-        // it is asserting that the passed through user id in result
-        // is actually the id 48
-        assertThat(result.getEmail(), is("dangao233@gmail.com"));
-        // it is verifying the method in the repo has been called
-        verify(repository).findByEmail("dangao233@gmail.com");
+        assertThat(result.get().getUserId(), is(48));
+        verify(repository).findById(48);
     }
 }
