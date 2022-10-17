@@ -2,9 +2,8 @@ package com.rmit.sept.msregistration.unit.controller;
 
 import com.rmit.sept.msregistration.constants.AppRole;
 import com.rmit.sept.msregistration.controller.RegistrationController;
-import com.rmit.sept.msregistration.model.Doctor;
 import com.rmit.sept.msregistration.model.User;
-import com.rmit.sept.msregistration.service.RegistrationService;
+import com.rmit.sept.msregistration.service.DoctorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,7 @@ public class ControllerTest {
     private RegistrationController controller;
 
     @Mock
-    private RegistrationService service;
+    private DoctorService service;
 
     private HttpHeaders httpHeaders;
 
