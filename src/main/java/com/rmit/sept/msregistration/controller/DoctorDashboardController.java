@@ -27,10 +27,10 @@ public class DoctorDashboardController {
     private PatientService patientService;
 
 
-    @GetMapping(path="/get-doctor/{userId}")
-    public Optional<Doctor> getExistingDoctorDetails(@PathVariable Integer userId) {
-        return doctorService.getExistingDoctorDetails(userId);
-    }
+//    @GetMapping(path="/get-doctor/{userId}")
+//    public Optional<Doctor> getExistingDoctorDetails(@PathVariable Integer userId) {
+//        return doctorService.getExistingDoctorDetails(userId);
+//    }
 
     @GetMapping(path="/get-doctor/{email}")
     public Integer getExistingDoctorDetailsByEmail(@PathVariable String email) {
@@ -46,14 +46,9 @@ public class DoctorDashboardController {
     public void deleteExistingUserDetails(@PathVariable Integer patientId) {
         patientService.deleteExistingUserDetails(patientId);
     }
-
-    @GetMapping(path="/get-patient/{email}")
-    public Integer getExistingPatientDetailsByEmail(@PathVariable String email) {
-        return patientService.getExistingPatientDetailsByEmail(email);
-    }
-
-    @GetMapping(path="/get-patient/{userId}")
-    public Optional<Patient> getExistingPatientDetails(@PathVariable Integer userId) {
-        return patientService.getExistingPatientDetails(userId);
-    }
+//
+//    @GetMapping(path="/get-patient/{userId}")
+//    public Optional<Patient> getExistingPatientDetails(@PathVariable Integer userId) {
+//        return patientService.getExistingPatientDetails(userId);
+//    }
 }

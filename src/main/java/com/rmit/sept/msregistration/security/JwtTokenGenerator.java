@@ -64,7 +64,7 @@ public class JwtTokenGenerator implements Serializable {
                 .claim(authoritiesKey, authorities)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + tokenValidity*1000))
-                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 

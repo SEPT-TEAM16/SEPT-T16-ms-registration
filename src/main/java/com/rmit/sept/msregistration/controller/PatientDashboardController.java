@@ -9,7 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -29,5 +28,10 @@ public class PatientDashboardController {
     @PostMapping(path="/medical-record/{patientId}") // Map ONLY POST Requests
     public ResponseEntity<MedicalRecord> addMedicalInfo(@RequestBody MedicalRecord medicalInfo, @PathVariable Integer patientId) {
         return new ResponseEntity<>(patientService.saveNewMedicalInfo(medicalInfo, patientId), HttpStatus.CREATED);
+    }
+
+    @GetMapping(path="/get-patient/{email}")
+    public Integer getExistingPatientDetailsByEmail(@PathVariable String email) {
+        return patientService.getExistingPatientDetailsByEmail(email);
     }
 }

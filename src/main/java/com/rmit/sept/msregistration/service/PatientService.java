@@ -41,7 +41,7 @@ public class PatientService implements UserDetailsService {
     private String rolePrefix;
 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
+       User user = userRepository.findByEmail(email);
         if(user == null){
             throw new UsernameNotFoundException("Invalid request, please check your username or password");
         }
@@ -101,8 +101,8 @@ public class PatientService implements UserDetailsService {
     }
 
     public Integer getExistingPatientDetailsByEmail(String email) {
-        Optional<Patient> patientDetails = patientRepository.findByEmail(email);
-        return patientDetails.get().getUserId();
+       Patient patientDetails = patientRepository.findByEmail(email);
+        return patientDetails.getUserId();
     }
 
     public void deleteExistingUserDetails(Integer patientId) {
