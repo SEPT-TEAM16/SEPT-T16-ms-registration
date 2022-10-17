@@ -3,14 +3,10 @@ package com.rmit.sept.msregistration.service;
 import com.rmit.sept.msregistration.exception.UserIdException;
 import com.rmit.sept.msregistration.model.Admin;
 import com.rmit.sept.msregistration.model.Doctor;
-import com.rmit.sept.msregistration.model.Patient;
 import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.repository.AdminRepository;
 import com.rmit.sept.msregistration.repository.DoctorRepository;
-import com.rmit.sept.msregistration.repository.PatientRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,7 +49,7 @@ public class DoctorService {
         Optional<Admin> adminDetails = adminRepository.findById(userId);
 
         log.error("Fetching details for admin with userDetails{}", adminDetails.toString());
-        if(!adminDetails.isPresent()){
+        if (!adminDetails.isPresent()) {
             throw new UserIdException("admin user Id is not found in the database", userId);
         }
         return adminDetails;
@@ -64,9 +60,15 @@ public class DoctorService {
         Optional<Doctor> doctorDetails = doctorRepository.findById(userId);
 
         log.error("Fetching details for doctor with userDetails{}", doctorDetails.toString());
-        if(!doctorDetails.isPresent()){
+        if (!doctorDetails.isPresent()) {
             throw new UserIdException("doctor user Id is not found in the database", userId);
         }
         return doctorDetails;
+    }
+
+    public Integer getExistingDoctorDetailsByEmail(String email) {
+        log.info("Fetching details for doctor with userId={}", email);
+        Optional<Doctor> doctorDetails = doctorRepository.findByEmail(email);
+        return doctorDetails.get().getUserId();
     }
 }

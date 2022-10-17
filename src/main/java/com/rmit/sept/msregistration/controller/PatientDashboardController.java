@@ -35,4 +35,9 @@ public class PatientDashboardController {
     public Optional<Patient> getExistingPatientDetails(@PathVariable Integer userId) {
         return patientService.getExistingPatientDetails(userId);
     }
+
+    @GetMapping(path="/get-patient/{email}")
+    public Integer getExistingDoctorDetailsByEmail(@PathVariable String email) {
+        return patientService.getExistingPatientDetailsByEmail(email);
+    }
 }

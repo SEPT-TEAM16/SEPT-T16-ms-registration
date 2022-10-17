@@ -100,6 +100,11 @@ public class PatientService implements UserDetailsService {
         return patientDetails;
     }
 
+    public Integer getExistingPatientDetailsByEmail(String email) {
+        Optional<Patient> patientDetails = patientRepository.findByEmail(email);
+        return patientDetails.get().getUserId();
+    }
+
     public void deleteExistingUserDetails(Integer patientId) {
         patientRepository.deleteById(patientId);
     }

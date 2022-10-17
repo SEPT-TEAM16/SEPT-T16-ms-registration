@@ -31,6 +31,11 @@ public class DoctorDashboardController {
         return doctorService.getExistingDoctorDetails(userId);
     }
 
+    @GetMapping(path="/get-doctor/{email}")
+    public Integer getExistingDoctorDetailsByEmail(@PathVariable String email) {
+        return doctorService.getExistingDoctorDetailsByEmail(email);
+    }
+
     @GetMapping(path="/get-admin/{userId}")
     public Optional<Admin> getExistingAdminDetails(@PathVariable Integer userId) {
         return doctorService.getExistingAdminDetails(userId);
