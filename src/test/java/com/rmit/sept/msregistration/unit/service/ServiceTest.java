@@ -1,10 +1,8 @@
 package com.rmit.sept.msregistration.unit.service;
 
 import com.rmit.sept.msregistration.model.Doctor;
-import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.repository.DoctorRepository;
-import com.rmit.sept.msregistration.repository.UserRepository;
-import com.rmit.sept.msregistration.service.RegistrationService;
+import com.rmit.sept.msregistration.service.DoctorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import javax.print.Doc;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -25,7 +22,7 @@ import static org.hamcrest.Matchers.*;
 public class ServiceTest {
     
     @InjectMocks
-    private RegistrationService service;
+    private DoctorService service;
     
     @Mock
     private DoctorRepository repository;

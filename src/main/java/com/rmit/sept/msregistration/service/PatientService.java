@@ -2,8 +2,10 @@ package com.rmit.sept.msregistration.service;
 
 import com.rmit.sept.msregistration.exception.UserIdException;
 import com.rmit.sept.msregistration.model.MedicalRecord;
+import com.rmit.sept.msregistration.model.Patient;
 import com.rmit.sept.msregistration.model.User;
 import com.rmit.sept.msregistration.repository.MedicalRepository;
+import com.rmit.sept.msregistration.repository.PatientRepository;
 import com.rmit.sept.msregistration.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +22,17 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class UserService implements UserDetailsService {
+public class PatientService implements UserDetailsService {
+
 
     @Autowired
-    private UserRepository userRepository;
+    private PatientRepository patientRepository;
 
     @Autowired
     private MedicalRepository medicalRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
@@ -51,30 +57,19 @@ public class UserService implements UserDetailsService {
         return list;
     }
 
-
-    public User saveNewUserDetails(User userInfo) {
-        userInfo.setPassword(bcryptEncoder.encode(userInfo.getPassword()));
-        log.info("Saving new user with userInfo={}", userInfo.toString());
-        return userRepository.save(userInfo);
-
-    }
-
-    public User getExistingUserDetails(String email) throws Exception {
-        log.info("Fetching details for user with email={}", email);
-        User userDetails = userRepository.findByEmail(email);
-        log.error("Fetching details for user with userDetails{}", userDetails.toString());
-//        if(userDetails.getEmail() != email){
-//            log.info("user email:{}", userDetails.getEmail());
-//            log.info("passed through email:{}", email);
-//            throw new Exception("email is not found in the database");
-//        }
+    public User saveNewPatientDetails(User userInfo) {
+        log.info("Saving new patient with userInfo={}", userInfo.toString());
+        Patient patientInfo = new Patient(userInfo);
+        patientInfo.setPassword(bcryptEncoder.encode(userInfo.getPassword()));
+        User userDetails = new User(patientRepository.save(patientInfo));
         return userDetails;
+
     }
 
-    public User updateExistingUserDetails(User newUserDetails, Integer userId) {
-        log.info("Fetching details for update existing user method with userId={}", userId);
+    public Patient updateExistingPatientDetails(Patient newUserDetails, Integer patientId) {
+        log.info("Fetching details for update existing user method with patientId={}", patientId);
 
-        Optional<User> userInfo = userRepository.findById(userId);
+        Optional<Patient> userInfo = patientRepository.findById(patientId);
 
         if (userInfo.isPresent()) {
             userInfo.get().setFirstName(newUserDetails.getFirstName());
@@ -88,19 +83,31 @@ public class UserService implements UserDetailsService {
             log.info("Fetching old user details={} from database", userInfo);
             log.info("Updating new user details={}", newUserDetails);
 
-            return userRepository.save(userInfo.get());
+            return patientRepository.save(userInfo.get());
         }
-        throw new UserIdException("user Id is not found in the database", userId);
+        throw new UserIdException("user Id is not found in the database", patientId);
     }
 
-    public void deleteExistingUserDetails(Integer userId) {
-       userRepository.deleteById(userId);
-    }
-    public MedicalRecord saveNewMedicalInfo(MedicalRecord medicalInfo, Integer userId) {
 
-        Optional<User> userDetails = userRepository.findById(userId);
+    public Optional<Patient> getExistingPatientDetails(Integer userId) {
+        log.info("Fetching details for patient with userId={}", userId);
+        Optional<Patient> patientDetails = patientRepository.findById(userId);
+
+        log.error("Fetching details for patient with userDetails{}", patientDetails.toString());
+        if(!patientDetails.isPresent()){
+            throw new UserIdException("patient user Id is not found in the database", userId);
+        }
+        return patientDetails;
+    }
+
+    public void deleteExistingUserDetails(Integer patientId) {
+        patientRepository.deleteById(patientId);
+    }
+    public MedicalRecord saveNewMedicalInfo(MedicalRecord medicalInfo, Integer patientId) {
+
+        Optional<Patient> userDetails = patientRepository.findById(patientId);
         if(!userDetails.isPresent()){
-            throw new UserIdException("user Id is not found in the database", userId);
+            throw new UserIdException("user Id is not found in the database", patientId);
         }
         return medicalRepository.save(medicalInfo);
     }
